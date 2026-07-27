@@ -1,0 +1,2 @@
+The goal is to build a search engine.
+The first step taken is to build a webcrawler. Search engine is a tool that helps point to the website that we are looking for. The first requirement towards implementing this project is to build a database that can serve as a lookup for the search engine. An effective tool to gather this required data is a webcrawler.
