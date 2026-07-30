@@ -1,4 +1,8 @@
-SEED_URL = "https://example.com"
+SEED_URL = "https://books.toscrape.com/"
 MAX_PAGES = 50
 REQUEST_TIMEOUT = 5
 USER_AGENT = "Crawler_1.0"
+MAX_DEPTH = 5
+MAX_RETRIES = 3
+BACKOFF_FACTOR = 2
+INITIAL_DELAY=1

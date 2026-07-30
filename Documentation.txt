@@ -1,2 +1,12 @@
 The goal is to build a search engine.
 The first step taken is to build a webcrawler. Search engine is a tool that helps point to the website that we are looking for. The first requirement towards implementing this project is to build a database that can serve as a lookup for the search engine. An effective tool to gather this required data is a webcrawler.
+
+Building webcrawler:
+Components: crawler, config, storage, parser
+Crawler makes use of bfs to visit and obtain links from visited websites.
+Config used to maintain overall variables that allow to easily change the settings and control of the crawler
+Storage: Makes use of os to store the visited html pages 
+Parser: Makes use of beautifulsoup to parse the html content obtained from the http request. It is mainly used here to select anchor tags containing href.
+
+WebCrawler 2:
+Makes use of metadata stored in the format of JSON for the visited webpages. Makes use of level limiting BFS to prevent infinitely deep BFS searches which would cause the crawler to get stuck.
