@@ -1,6 +1,6 @@
 import os
+from config import PAGE_DIR
 
-PAGE_DIR = "data/pages"
 os.makedirs(PAGE_DIR,exist_ok=True)
 
 def save_page(page_id,html):

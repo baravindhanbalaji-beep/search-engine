@@ -1,9 +1,6 @@
 import sqlite3
 import os
-
-DB_DIR = "database"
-os.makedirs(DB_DIR,exist_ok=True)
-DB_PATH = os.path.join(DB_DIR,"search_engine.db")
+from config import DB_PATH
 
 def init_database():
 

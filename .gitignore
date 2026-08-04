@@ -1,20 +1,55 @@
-# Crawled pages
-data/pages/
-
-# Python cache
+# -----------------------------
+# Python
+# -----------------------------
 __pycache__/
 *.py[cod]
+*$py.class
 
-# Virtual environment
+# Virtual Environment
+.venv/
 venv/
+env/
 
-# IDE
+# -----------------------------
+# IDEs
+# -----------------------------
 .vscode/
 .idea/
 
-# OS files
+# -----------------------------
+# Logs
+# -----------------------------
+logs/
+*.log
+
+# -----------------------------
+# Database
+# -----------------------------
+database/*.db
+database/*.sqlite
+database/*.sqlite3
+
+# -----------------------------
+# Crawler Data
+# Uncomment if you DON'T want
+# crawled pages in GitHub
+# -----------------------------
+# data/pages/
+
+# -----------------------------
+# OS Files
+# -----------------------------
 .DS_Store
 Thumbs.db
 
-# Logs
-*.log
+# -----------------------------
+# Build / Packaging
+# -----------------------------
+build/
+dist/
+*.egg-info/
+
+# -----------------------------
+# Environment Variables
+# -----------------------------
+.env
