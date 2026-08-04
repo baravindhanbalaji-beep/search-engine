@@ -123,5 +123,15 @@ class DatabaseManager:
         self.cursor.execute("SELECT COUNT(*) FROM postings")
         return self.cursor.fetchone()[0]
 
+    def get_page(self,page_id):
+        self.cursor.execute(
+            """
+            SELECT title,url 
+            FROM pages 
+            WHERE id = ?
+            """,
+            (page_id,)
+        )
 
+        return self.cursor.fetchone()
 
