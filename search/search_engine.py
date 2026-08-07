@@ -9,12 +9,12 @@ class SearchEngine:
         self.ranker = Ranker(db)
 
     def search(self,query):
-        query_tokens = self.query_processor.process(query)
+        query_tokens,phrases = self.query_processor.process(query)
 
-        if not query_tokens:
+        if not query_tokens and not phrases:
             return []
         
-        ranked_pages = self.ranker.rank(query_tokens)
+        ranked_pages = self.ranker.rank(query_tokens,phrases)
 
         results = []
 

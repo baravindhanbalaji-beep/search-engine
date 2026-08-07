@@ -1,4 +1,5 @@
 import sqlite3
+import json
 
 class DatabaseManager:
 
@@ -35,6 +36,8 @@ class DatabaseManager:
             page_id INTEGER,
 
             frequency INTEGER,
+
+            positions TEXT,
 
             PRIMARY KEY(term_id,page_id),
 
@@ -73,15 +76,15 @@ class DatabaseManager:
         self.conn.commit()
         return self.cursor.lastrowid
 
-    def insert_posting(self,term_id,page_id,frequency):
+    def insert_posting(self,term_id,page_id,frequency,positions):
 
         self.cursor.execute(
             """
             INSERT OR REPLACE INTO postings
-            (term_id,page_id,frequency)
-            VALUES (?,?,?)
+            (term_id,page_id,frequency,positions)
+            VALUES (?,?,?,?)
             """,
-            (term_id,page_id,frequency)
+            (term_id,page_id,frequency,json.dumps(positions))
         )
 
     def commit(self):
@@ -105,15 +108,21 @@ class DatabaseManager:
             return []
         self.cursor.execute(
             """
-            SELECT p.page_id,pg.title,pg.url,p.frequency
+            SELECT p.page_id,pg.title,pg.url,p.frequency,p.positions
             FROM postings p
             JOIN pages pg ON p.page_id=pg.id
             WHERE p.term_id = ?
             """,
             (term_id,)
         )
-
-        return self.cursor.fetchall()
+        results = []
+        for page_id,title,url,frequency,positions in self.cursor.fetchall():
+            results.append(
+                (
+                    page_id,title,url,frequency,json.loads(positions)
+                )
+            )
+        return results
 
     def get_term_count(self):
         self.cursor.execute("SELECT COUNT(*) FROM terms")
@@ -135,3 +144,45 @@ class DatabaseManager:
 
         return self.cursor.fetchone()
 
+    def get_total_documents(self):
+        self.cursor.execute(
+            """
+            SELECT COUNT(*) FROM pages
+            """
+        )
+        return self.cursor.fetchone()[0]
+
+    def get_document_frequency(self,term):
+        term_id = self.get_term_id(term)
+        if term_id is None:
+            return 0
+        self.cursor.execute(
+            """
+            SELECT COUNT(*) FROM postings
+            WHERE term_id = ?
+            """,
+            (term_id,)
+        )
+        return self.cursor.fetchone()[0]
+
+    def get_postings_with_positions(self,term):
+        term_id = self.get_term_id(term)
+
+        if term_id is None:
+            return []
+
+        self.cursor.execute(
+            """
+            SELECT page_id,positions
+            FROM postings 
+            WHERE term_id = ?
+            """,
+            (term_id,)
+        )
+
+        results = []
+        for page_id,positions in self.cursor.fetchall():
+            results.append(
+                (page_id,json.loads(positions))
+            )
+        return results
